@@ -9,7 +9,7 @@ import contextlib
 from xml.sax import saxutils
 from lxml import etree as etree_
 
-from cybox.compat import str
+from cybox.compat import basestring, str
 
 CDATA_START = "<![CDATA["
 CDATA_END = "]]>"

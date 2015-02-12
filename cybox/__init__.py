@@ -7,7 +7,7 @@ import collections
 import inspect
 import json
 
-from .compat import StringIO, str
+from .compat import StringIO, basestring, str
 
 import cybox.bindings as bindings
 import cybox.utils.idgen
