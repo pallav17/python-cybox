@@ -11,14 +11,13 @@ is_py3 = (_ver[0] == 3)
 
 
 if is_py2:
+    from StringIO import StringIO
+    basestring = basestring
     bytes = str
     str = unicode
-    basestring = basestring
-    from StringIO import StringIO
-
 
 elif is_py3:
+    from io import StringIO
+    basestring = (str, bytes)
     bytes = bytes
     str = str
-    basestring = (str, bytes)
-    from io import StringIO
