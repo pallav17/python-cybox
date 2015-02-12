@@ -6,7 +6,8 @@ __version__ = "2.1.0.9"
 import collections
 import inspect
 import json
-from StringIO import StringIO
+
+from .compat import StringIO
 
 import cybox.bindings as bindings
 import cybox.utils.idgen

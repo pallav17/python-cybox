@@ -52,8 +52,8 @@ def round_trip(o, output=False, list_=False):
 
     klass = o.__class__
     if output:
-        print "Class: ", klass
-        print "-" * 40
+        print("Class: ", klass)
+        print("-" * 40)
 
     # 1. cybox.Entity -> dict/list
     if list_:
@@ -66,7 +66,7 @@ def round_trip(o, output=False, list_=False):
 
     if output:
         print(json_string)
-        print "-" * 40
+        print("-" * 40)
 
     # Before parsing the JSON, make sure the cache is clear
     cybox.utils.cache_clear()
@@ -91,7 +91,7 @@ def round_trip(o, output=False, list_=False):
 
     if output:
         print(xml_string)
-        print "-" * 40
+        print("-" * 40)
 
     # Before parsing the XML, make sure the cache is clear
     cybox.utils.cache_clear()

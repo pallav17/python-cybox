@@ -4,7 +4,7 @@
 import sys
 
 from cybox.bindings import *
-import cybox_common
+from . import cybox_common
 
 from cybox_common import ControlledVocabularyStringType
 
@@ -378,7 +378,7 @@ class ObservableType(GeneratedsSuper):
 
             try:
                 self.sighting_count = int(value)
-            except ValueError, exp:
+            except ValueError as exp:
                 raise_parse_error(node, 'Bad integer attribute: %s' % exp)
             if self.sighting_count <= 0:
                 raise_parse_error(node, 'Invalid PositiveInteger')
@@ -675,7 +675,7 @@ class FrequencyType(GeneratedsSuper):
 
             try:
                 self.rate = float(value)
-            except ValueError, exp:
+            except ValueError as exp:
                 raise ValueError('Bad float/double attribute (rate): %s' % exp)
         value = find_attr_value_('scale', node)
         if value is not None:
@@ -917,7 +917,7 @@ class ActionType(GeneratedsSuper):
 
             try:
                 self.timestamp = self.gds_parse_datetime(value, node, 'timestamp')
-            except ValueError, exp:
+            except ValueError as exp:
                 raise ValueError('Bad date-time attribute (timestamp): %s' % exp)
         value = find_attr_value_('action_status', node)
         if value is not None:
@@ -928,7 +928,7 @@ class ActionType(GeneratedsSuper):
 
             try:
                 self.ordinal_position = int(value)
-            except ValueError, exp:
+            except ValueError as exp:
                 raise_parse_error(node, 'Bad integer attribute: %s' % exp)
             if self.ordinal_position <= 0:
                 raise_parse_error(node, 'Invalid PositiveInteger')
@@ -3900,7 +3900,7 @@ Usage: python <Parser>.py [ -s ] <in_xml_file>
 """
 
 def usage():
-    print USAGE_TEXT
+    print(USAGE_TEXT)
     sys.exit(1)
 
 def get_root_tag(node):

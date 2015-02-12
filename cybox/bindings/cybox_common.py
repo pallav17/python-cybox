@@ -392,7 +392,7 @@ class MeasureSourceType(GeneratedsSuper):
 
             try:
                 self.sighting_count = int(value)
-            except ValueError, exp:
+            except ValueError as exp:
                 raise_parse_error(node, 'Bad integer attribute: %s' % exp)
             if self.sighting_count <= 0:
                 raise_parse_error(node, 'Invalid PositiveInteger')
@@ -2921,7 +2921,7 @@ class ErrorType(GeneratedsSuper):
             sval_ = child_.text
             try:
                 ival_ = int(sval_)
-            except (TypeError, ValueError), exp:
+            except (TypeError, ValueError) as exp:
                 raise_parse_error(child_, 'requires integer: %s' % exp)
             ival_ = self.gds_validate_integer(ival_, node, 'Error_Count')
             self.Error_Count = ival_
@@ -7797,7 +7797,7 @@ Usage: python <Parser>.py [ -s ] <in_xml_file>
 """
 
 def usage():
-    print USAGE_TEXT
+    print(USAGE_TEXT)
     sys.exit(1)
 
 def get_root_tag(node):
