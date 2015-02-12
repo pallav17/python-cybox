@@ -6,8 +6,6 @@ import sys
 from cybox.bindings import *
 from . import cybox_common
 
-from cybox_common import ControlledVocabularyStringType
-
 #Object Imports
 from cybox.bindings.account_object import AccountObjectType
 from cybox.bindings.address_object import AddressObjectType
@@ -227,7 +225,7 @@ class ObservableType(GeneratedsSuper):
     Observable defined elsewhere.The negate field, when set to true,
     indicates the absence (rather than the presence) of the given
     Observable in a CybOX pattern."""
-    
+
     subclass = None
     superclass = None
     def __init__(self, negate=False, idref=None, id=None, sighting_count=None, Title=None, Description=None, Keywords=None, Observable_Source=None, Object=None, Event=None, Observable_Composition=None, Pattern_Fidelity=None):
@@ -238,10 +236,10 @@ class ObservableType(GeneratedsSuper):
         self.Title = Title
         self.Description = Description
         self.Keywords = Keywords
-        
-        if Observable_Source is None: 
+
+        if Observable_Source is None:
             self.Observable_Source = []
-        else: 
+        else:
             self.Observable_Source = Observable_Source
 
         self.Object = Object
@@ -348,7 +346,7 @@ class ObservableType(GeneratedsSuper):
             self.Observable_Composition.export(lwrite, level, 'cybox:', name_='Observable_Composition', pretty_print=pretty_print)
         if self.Pattern_Fidelity is not None:
             self.Pattern_Fidelity.export(lwrite, level, 'cybox:', name_='Pattern_Fidelity', pretty_print=pretty_print)
-            
+
     def build(self, node):
         already_processed = set()
         self.buildAttributes(node, node.attrib, already_processed)
@@ -426,7 +424,7 @@ class EventType(GeneratedsSuper):
     received).The id field specifies a unique id for this Event.The
     idref field specifies a unique id reference to an Event defined
     elsewhere."""
-    
+
     subclass = None
     superclass = None
     def __init__(self, idref=None, id=None, Type=None, Description=None, Observation_Method=None, Actions=None, Location=None, Frequency=None, Event=None):
@@ -522,7 +520,7 @@ class EventType(GeneratedsSuper):
             self.Frequency.export(lwrite, level, 'cybox:', name_='Frequency', pretty_print=pretty_print)
         for Event_ in self.Event:
             Event_.export(lwrite, level, 'cybox:', name_='Event', pretty_print=pretty_print)
-            
+
     def build(self, node):
         already_processed = set()
         self.buildAttributes(node, node.attrib, already_processed)
@@ -565,13 +563,13 @@ class EventType(GeneratedsSuper):
                     type_name_ = type_names_[0]
                 else:
                     type_name_ = type_names_[1]
-            
+
                 if type_name_ == "CIQAddress3.0InstanceType":
                     import cybox.bindings.extensions.location.ciq_address_3_0 as ciq_address_binding
                     obj_ = ciq_address_binding.CIQAddress3_0InstanceType.factory()
             else:
                 obj_ = cybox_common.LocationType.factory() # IdentityType is not abstract
-            
+
             obj_.build(child_)
             self.set_Location(obj_)
         elif nodeName_ == 'Frequency':
@@ -595,7 +593,7 @@ class FrequencyType(GeneratedsSuper):
     leveraged within an event or action pattern observable
     triggering on the matching of a specified trend in the frequency
     of an event or action."""
-    
+
     subclass = None
     superclass = None
     def __init__(self, units=None, trend=None, rate=None, scale=None):
@@ -688,7 +686,7 @@ class FrequencyType(GeneratedsSuper):
 class ActionsType(GeneratedsSuper):
     """The ActionsType is a complex type representing a set of cyber
     observable actions."""
-    
+
     subclass = None
     superclass = None
     def __init__(self, Action=None):
@@ -765,7 +763,7 @@ class ActionType(GeneratedsSuper):
     operational context in which the Action is relevantThe timestamp
     field represents the local or relative time at which the action
     occurred or was observed."""
-    
+
     subclass = None
     superclass = None
     def __init__(self, timestamp_precision='second', timestamp=None, action_status=None, ordinal_position=None, context=None, idref=None, id=None, Type=None, Name=None, Description=None, Action_Aliases=None, Action_Arguments=None, Location=None, Discovery_Method=None, Associated_Objects=None, Relationships=None, Frequency=None):
@@ -904,7 +902,7 @@ class ActionType(GeneratedsSuper):
             self.Relationships.export(lwrite, level, 'cybox:', name_='Relationships', pretty_print=pretty_print)
         if self.Frequency is not None:
             self.Frequency.export(lwrite, level, 'cybox:', name_='Frequency', pretty_print=pretty_print)
-    
+
     def build(self, node):
         already_processed = set()
         self.buildAttributes(node, node.attrib, already_processed)
@@ -975,13 +973,13 @@ class ActionType(GeneratedsSuper):
                     type_name_ = type_names_[0]
                 else:
                     type_name_ = type_names_[1]
-            
+
                 if type_name_ == "CIQAddress3.0InstanceType":
                     import cybox.bindings.extensions.location.ciq_address_3_0 as ciq_address_binding
                     obj_ = ciq_address_binding.CIQAddress3_0InstanceType.factory()
             else:
                 obj_ = cybox_common.LocationType.factory() # IdentityType is not abstract
-            
+
             obj_.build(child_)
             self.set_Location(obj_)
         elif nodeName_ == 'Discovery_Method':
@@ -1005,7 +1003,7 @@ class ActionType(GeneratedsSuper):
 class ActionAliasesType(GeneratedsSuper):
     """The ActionAliasesType enables identification of other potentially
     used names for this Action."""
-    
+
     subclass = None
     superclass = None
     def __init__(self, Action_Alias=None):
@@ -1074,7 +1072,7 @@ class ActionAliasesType(GeneratedsSuper):
 class ActionArgumentsType(GeneratedsSuper):
     """The ActionArgumentsType enables the specification of relevant
     arguments/parameters for this Action."""
-    
+
     subclass = None
     superclass = None
     def __init__(self, Action_Argument=None):
@@ -1215,7 +1213,7 @@ class ActionArgumentType(GeneratedsSuper):
 class AssociatedObjectsType(GeneratedsSuper):
     """The AssociatedObjectsType enables the description/specification of
     cyber Objects relevant to an Action."""
-    
+
     subclass = None
     superclass = None
     def __init__(self, Associated_Object=None):
@@ -1284,7 +1282,7 @@ class ActionPertinentObjectPropertiesType(GeneratedsSuper):
     """The ActionPertinentObjectPropertiesType identifies which of the
     Properties of this Object are specifically pertinent to this
     Action."""
-    
+
     subclass = None
     superclass = None
     def __init__(self, Property=None):
@@ -1425,7 +1423,7 @@ class ActionPertinentObjectPropertyType(GeneratedsSuper):
 class ActionRelationshipsType(GeneratedsSuper):
     """The ActionRelationshipsType enables description of other cyber observable
     actions that are related to this Action."""
-    
+
     subclass = None
     superclass = None
     def __init__(self, Relationship=None):
@@ -1572,7 +1570,7 @@ class ActionReferenceType(GeneratedsSuper):
     """ActionReferenceType is intended to serve as a method for linking to
     actions.The action_id field refers to the id of the action being
     referenced."""
-    
+
     subclass = None
     superclass = None
     def __init__(self, action_id=None):
@@ -1833,13 +1831,13 @@ class ObjectType(GeneratedsSuper):
                     type_name_ = type_names_[0]
                 else:
                     type_name_ = type_names_[1]
-            
+
                 if type_name_ == "CIQAddress3.0InstanceType":
                     import cybox.bindings.extensions.location.ciq_address_3_0 as ciq_address_binding
                     obj_ = ciq_address_binding.CIQAddress3_0InstanceType.factory()
             else:
                 obj_ = cybox_common.LocationType.factory() # IdentityType is not abstract
-            
+
             obj_.build(child_)
             self.set_Location(obj_)
         elif nodeName_ == 'Related_Objects':
@@ -1878,7 +1876,7 @@ class DomainSpecificObjectPropertiesType(GeneratedsSuper):
     This enables domains utilizing CybOX such as malware analysis or
     forensics to incorporate non-generalized object metadata from
     their domains into CybOX objects."""
-    
+
     subclass = None
     superclass = None
     def __init__(self, xsi_type = None):
@@ -1938,7 +1936,7 @@ class RelatedObjectsType(GeneratedsSuper):
     """The RelatedObjectsType enables the identification and/or
     specification of Objects with relevant relationships with this
     Object."""
-    
+
     subclass = None
     superclass = None
     def __init__(self, Related_Object=None):
@@ -2007,7 +2005,7 @@ class RelatedObjectType(ObjectType):
     """The RelatedObjectType enables the identification and/or
     specification of an Object with a relevant relationship with
     this Object."""
-    
+
     subclass = None
     superclass = ObjectType
     def __init__(self, has_changed=None, idref=None, id=None, State=None, Description=None, Properties=None, Domain_Specific_Object_Properties=None, Location=None, Related_Objects=None, Defined_Effect=None, Discovery_Method=None, Relationship=None):
@@ -2065,7 +2063,7 @@ class RelatedObjectType(ObjectType):
         super(RelatedObjectType, self).buildAttributes(node, attrs, already_processed)
     def buildChildren(self, child_, node, nodeName_, fromsubclass_=False):
         if nodeName_ == 'Relationship':
-            obj_ = ControlledVocabularyStringType.factory()
+            obj_ = cybox_common.ControlledVocabularyStringType.factory()
             obj_.build(child_)
             self.set_Relationship(obj_)
         super(RelatedObjectType, self).buildChildren(child_, node, nodeName_, True)
@@ -2082,7 +2080,7 @@ class DefinedEffectType(GeneratedsSuper):
     DefinedEffectType) are maintained as part of the core CybOX
     schema.The effect_type field specifies the nature of the Defined
     Effect instantiated in the place of the Defined_Effect element."""
-    
+
     subclass = None
     superclass = None
     def __init__(self, effect_type=None, extensiontype_=None):
@@ -2230,7 +2228,7 @@ class DataReadEffectType(DefinedEffectType):
     """The DataReadEffectType type is intended to characterize the effects
     of actions upon objects where some data is read, such as from a
     file or a pipe."""
-    
+
     subclass = None
     superclass = DefinedEffectType
     def __init__(self, effect_type=None, Data=None):
@@ -2298,7 +2296,7 @@ class DataWrittenEffectType(DefinedEffectType):
     """The DataWrittenEffectType type is intended to characterize the
     effects of actions upon objects where some data is written, such
     as to a file or a pipe."""
-    
+
     subclass = None
     superclass = DefinedEffectType
     def __init__(self, effect_type=None, Data=None):
@@ -2366,7 +2364,7 @@ class DataSentEffectType(DefinedEffectType):
     """The DataSentEffectType type is intended to characterize the effects
     of actions upon objects where some data is sent, such as a byte
     sequence on a socket."""
-    
+
     subclass = None
     superclass = DefinedEffectType
     def __init__(self, effect_type=None, Data=None):
@@ -2434,7 +2432,7 @@ class DataReceivedEffectType(DefinedEffectType):
     """The DataReceivedEffectType type is intended to characterize the
     effects of actions upon objects where some data is received,
     such as a byte sequence on a socket."""
-    
+
     subclass = None
     superclass = DefinedEffectType
     def __init__(self, effect_type=None, Data=None):
@@ -2582,7 +2580,7 @@ class PropertiesEnumeratedEffectType(DefinedEffectType):
     the effects of actions upon objects where some properties of the
     object are enumerated, such as the startup parameters for a
     process."""
-    
+
     subclass = None
     superclass = DefinedEffectType
     def __init__(self, effect_type=None, Properties=None):
@@ -2649,7 +2647,7 @@ class PropertiesEnumeratedEffectType(DefinedEffectType):
 class PropertiesType(GeneratedsSuper):
     """The PropertiesType specifies the properties that were enumerated as
     a result of the action on the object."""
-    
+
     subclass = None
     superclass = None
     def __init__(self, Property=None):
@@ -2718,7 +2716,7 @@ class ValuesEnumeratedEffectType(DefinedEffectType):
     """The ValuesEnumeratedEffectType type is intended to characterize the
     effects of actions upon objects where some values of the object
     are enumerated, such as the values of a registry key."""
-    
+
     subclass = None
     superclass = DefinedEffectType
     def __init__(self, effect_type=None, Values=None):
@@ -2785,7 +2783,7 @@ class ValuesEnumeratedEffectType(DefinedEffectType):
 class ValuesType(GeneratedsSuper):
     """The ValuesType specifies the values that were enumerated as a result
     of the action on the object."""
-    
+
     subclass = None
     superclass = None
     def __init__(self, Value=None):
@@ -2857,7 +2855,7 @@ class SendControlCodeEffectType(DefinedEffectType):
     other control-oriented communication signal, is sent to the
     object. For example, an action may send a control code to change
     the running state of a process."""
-    
+
     subclass = None
     superclass = DefinedEffectType
     def __init__(self, effect_type=None, Control_Code=None):
@@ -3105,7 +3103,7 @@ class EventPoolType(GeneratedsSuper):
     the pooled Event elements. This reduces redundancy caused when
     identical Events occur multiple times within a set of defined
     Observables."""
-    
+
     subclass = None
     superclass = None
     def __init__(self, Event=None):
@@ -3177,7 +3175,7 @@ class ActionPoolType(GeneratedsSuper):
     the pooled Action elements. This reduces redundancy caused when
     identical Actions occur multiple times within a set of defined
     Observables."""
-    
+
     subclass = None
     superclass = None
     def __init__(self, Action=None):
@@ -3249,7 +3247,7 @@ class ObjectPoolType(GeneratedsSuper):
     the pooled Object elements. This reduces redundancy caused when
     identical Objects occur multiple times within a set of defined
     Observables."""
-    
+
     subclass = None
     superclass = None
     def __init__(self, Object=None):
@@ -3321,7 +3319,7 @@ class PropertyPoolType(GeneratedsSuper):
     the pooled Properties elements. This reduces redundancy caused
     when identical Properties occur multiple times within a set of
     defined Observables."""
-    
+
     subclass = None
     superclass = None
     def __init__(self, Property=None):
@@ -3390,7 +3388,7 @@ class ObfuscationTechniquesType(GeneratedsSuper):
     """The ObfuscationTechniquesType enables the description of a set of
     potential techniques an attacker could leverage to obfuscate the
     observability of this Observable."""
-    
+
     subclass = None
     superclass = None
     def __init__(self, Obfuscation_Technique=None):
@@ -3529,7 +3527,7 @@ class ObfuscationTechniqueType(GeneratedsSuper):
 # end class ObfuscationTechniqueType
 
 class KeywordsType(GeneratedsSuper):
-    
+
     subclass = None
     superclass = None
     def __init__(self, Keyword=None):
@@ -3596,7 +3594,7 @@ class KeywordsType(GeneratedsSuper):
 # end class KeywordsType
 
 class PatternFidelityType(GeneratedsSuper):
-    
+
     subclass = None
     superclass = None
     def __init__(self, Noisiness=None, Ease_of_Evasion=None, Evasion_Techniques=None):
@@ -3686,7 +3684,7 @@ class AssociatedObjectType(ObjectType):
     """The AssociatedObjectType is a complex type representing the
     characterization of a cyber observable Object associated with a
     given cyber observable Action."""
-    
+
     subclass = None
     superclass = ObjectType
     def __init__(self, has_changed=None, idref=None, id=None, State=None, Description=None, Properties=None, Domain_Specific_Object_Properties=None, Location=None, Related_Objects=None, Defined_Effect=None, Discovery_Method=None, Association_Type=None, Action_Pertinent_Object_Properties=None):

@@ -18,7 +18,7 @@ if is_py2:
 
 
 elif is_py3:
-    str = str
     bytes = bytes
+    str = str
     basestring = (str, bytes)
     from io import StringIO

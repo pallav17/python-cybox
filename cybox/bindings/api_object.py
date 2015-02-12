@@ -4,13 +4,13 @@
 import sys
 
 from cybox.bindings import *
-import cybox_common
+from . import cybox_common
 
 
 class APIObjectType(cybox_common.ObjectPropertiesType):
     """The APIObjectType type is intended to characterize a specific
     Application Programming Interface."""
-    
+
     subclass = None
     superclass = cybox_common.ObjectPropertiesType
     def __init__(self, object_reference=None, Custom_Properties=None, xsi_type=None, Description=None, Function_Name=None, Normalized_Function_Name=None, Platform=None, Address=None):
@@ -220,7 +220,7 @@ Usage: python <Parser>.py [ -s ] <in_xml_file>
 """
 
 def usage():
-    print USAGE_TEXT
+    print(USAGE_TEXT)
     sys.exit(1)
 
 def get_root_tag(node):

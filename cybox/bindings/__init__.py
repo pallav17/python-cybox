@@ -9,6 +9,8 @@ import contextlib
 from xml.sax import saxutils
 from lxml import etree as etree_
 
+from cybox.compat import str
+
 CDATA_START = "<![CDATA["
 CDATA_END = "]]>"
 
@@ -273,10 +275,10 @@ def quote_xml(text):
     if text is None:
         return u''
 
-    # Convert `text` to unicode string. This is mainly a catch-all for non
+    # Convert `text` to Unicode string. This is mainly a catch-all for non
     # string/unicode types like bool and int.
     try:
-        text = unicode(text)
+        text = str(text)
     except UnicodeDecodeError:
         text = text.decode(ExternalEncoding)
 
@@ -293,10 +295,10 @@ def quote_attrib(text):
     if text is None:
         return u'""'
 
-    # Convert `text` to unicode string. This is mainly a catch-all for non
+    # Convert `text` to Unicode string. This is mainly a catch-all for non
     # string/unicode types like bool and int.
     try:
-        text = unicode(text)
+        text = str(text)
     except UnicodeDecodeError:
         text = text.decode(ExternalEncoding)
 
