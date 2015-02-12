@@ -9,6 +9,8 @@ import contextlib
 from xml.sax import saxutils
 from lxml import etree as etree_
 
+from cybox.compat import basestring, str
+
 CDATA_START = "<![CDATA["
 CDATA_END = "]]>"
 
@@ -84,7 +86,7 @@ class GeneratedsSuper(object):
         for value in values:
             try:
                 fvalue = float(value)
-            except (TypeError, ValueError), exp:
+            except (TypeError, ValueError) as exp:
                 raise_parse_error(node, 'Requires sequence of integers')
         return input_data
 
@@ -102,7 +104,7 @@ class GeneratedsSuper(object):
         for value in values:
             try:
                 fvalue = float(value)
-            except (TypeError, ValueError), exp:
+            except (TypeError, ValueError) as exp:
                 raise_parse_error(node, 'Requires sequence of floats')
         return input_data
 
@@ -120,7 +122,7 @@ class GeneratedsSuper(object):
         for value in values:
             try:
                 fvalue = float(value)
-            except (TypeError, ValueError), exp:
+            except (TypeError, ValueError) as exp:
                 raise_parse_error(node, 'Requires sequence of doubles')
         return input_data
 
@@ -269,16 +271,32 @@ def showIndent(lwrite, level, pretty_print=True):
             lwrite('    ' * level)
 
 
-def quote_xml(text):
-    if text is None:
-        return u''
+def _coerce_unicode(text):
+    # Convert `text` to Unicode string.
 
-    # Convert `text` to unicode string. This is mainly a catch-all for non
+    if text is None:
+        text = ""
+
+    if isinstance(text, str):
+        return text
+
+    # This is mainly a catch-all for non
     # string/unicode types like bool and int.
     try:
-        text = unicode(text)
+        text = str(text)
     except UnicodeDecodeError:
         text = text.decode(ExternalEncoding)
+
+    return text
+
+
+def quote_xml(text):
+    """Format a value for display as an XML text node.
+
+    Returns:
+        Unicode string (str on Python 3, unicode on Python 2)
+    """
+    text = _coerce_unicode(text)
 
     # If it's a CDATA block, return the text as is.
     if text.startswith(CDATA_START):
@@ -290,15 +308,12 @@ def quote_xml(text):
 
 
 def quote_attrib(text):
-    if text is None:
-        return u'""'
+    """Format a value for display as an XML attribute.
 
-    # Convert `text` to unicode string. This is mainly a catch-all for non
-    # string/unicode types like bool and int.
-    try:
-        text = unicode(text)
-    except UnicodeDecodeError:
-        text = text.decode(ExternalEncoding)
+    Returns:
+        Unicode string (str on Python 3, unicode on Python 2)
+    """
+    text = _coerce_unicode(text)
 
     # Return the escaped the value of text.
     # Note: This wraps the escaped text in quotation marks.

@@ -2,6 +2,7 @@
 # See LICENSE.txt for complete terms.
 
 import cybox
+from cybox.compat import basestring
 import cybox.bindings.cybox_common as common_binding
 from cybox.common import HexBinary, String, VocabString
 
