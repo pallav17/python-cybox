@@ -5,6 +5,8 @@ from base64 import b64encode
 import unittest
 from zlib import compress
 
+from six import u
+
 from cybox.objects.artifact_object import (Artifact, Base64Encoding,
         Bz2Compression, RawArtifact, XOREncryption, ZlibCompression)
 from cybox.test import round_trip
@@ -25,7 +27,7 @@ class TestRawArtifact(unittest.TestCase):
 class TestArtifactEncoding(unittest.TestCase):
 
     def test_cannot_create_artifact_from_unicode_data(self):
-        self.assertRaises(ValueError, Artifact, u"abc123")
+        self.assertRaises(ValueError, Artifact, u("abc123"))
 
     def test_setting_ascii_artifact_data_no_packaging(self):
         a = Artifact()
@@ -48,13 +50,13 @@ class TestArtifactEncoding(unittest.TestCase):
 
     def test_setting_ascii_artifact_packed_data_no_packaging(self):
         a = Artifact()
-        a.packed_data = u"abc123"
+        a.packed_data = u("abc123")
         self.assertEqual(bytes, type(a.data))
         self.assertEqual(str, type(a.packed_data))
 
     def test_cannot_set_nonascii_artifact_packed_data(self):
         a = Artifact()
-        a.packed_data = u"\x00abc123\xff"
+        a.packed_data = u("\x00abc123\xff")
         self.assertEqual(str, type(a.packed_data))
 
         #TODO: Should this raise an error sooner, since there's nothing we can
@@ -84,10 +86,10 @@ class TestArtifact(ObjectTestCase, unittest.TestCase):
         self.assertEqual(a.packed_data, None)
 
         a.data = b"Blob"
-        self.assertRaises(ValueError, _set_packed_data, a, u"blob")
+        self.assertRaises(ValueError, _set_packed_data, a, u("blob"))
         a.data = None
 
-        a.packed_data = u"Blob"
+        a.packed_data = u("Blob")
         self.assertRaises(ValueError, _set_data, a, b"blob")
         a.packed_data = None
 

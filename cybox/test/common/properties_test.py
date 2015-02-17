@@ -4,6 +4,8 @@
 import datetime
 import unittest
 
+from six import u
+
 from cybox.common import (BaseProperty, DateTime, Integer, Long,
         NonNegativeInteger, PositiveInteger, String, UnsignedInteger,
         UnsignedLong, BINDING_CLASS_MAPPING, DEFAULT_DELIM)
@@ -37,7 +39,7 @@ class TestBaseProperty(unittest.TestCase):
         self.assertEqual(s, s2)
 
     def test_list_of_strings_with_comma(self):
-        s = String([u"string,1", u"string,1", u"string,3"])
+        s = String([u("string,1"), u("string,1"), u("string,3")])
         s2 = cybox.test.round_trip(s)
         self.assertEqual(s, s2)
 
@@ -53,7 +55,7 @@ class TestBaseProperty(unittest.TestCase):
         self.assertEqual(i.value, 42)
 
     def test_unicode_string(self):
-        s = u"A Unicode \ufffd string"
+        s = u("A Unicode \ufffd string")
         string = String(s)
         self.assertEqual(s, str(string))
         self.assertEqual(s.encode("utf-8"), str(string).encode("utf-8"))
