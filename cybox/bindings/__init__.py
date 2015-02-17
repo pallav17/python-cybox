@@ -2,14 +2,13 @@
 # See LICENSE.txt for complete terms.
 
 import base64
+import contextlib
 from datetime import datetime, tzinfo, timedelta
 import re
-import contextlib
-
 from xml.sax import saxutils
-from lxml import etree as etree_
 
-from cybox.compat import basestring, str
+from lxml import etree as etree_
+import six
 
 CDATA_START = "<![CDATA["
 CDATA_END = "]]>"
@@ -148,7 +147,7 @@ class GeneratedsSuper(object):
         return input_data
 
     def gds_format_datetime(self, input_data, input_name=''):
-        if isinstance(input_data, basestring):
+        if isinstance(input_data, six.string_types):
             return input_data
         if input_data.microsecond == 0:
             _svalue = input_data.strftime('%Y-%m-%dT%H:%M:%S')
@@ -195,7 +194,7 @@ class GeneratedsSuper(object):
         return input_data
 
     def gds_format_date(self, input_data, input_name=''):
-        if isinstance(input_data, basestring):
+        if isinstance(input_data, six.string_types):
             return input_data
         _svalue = input_data.strftime('%Y-%m-%d')
         if input_data.tzinfo is not None:
@@ -283,7 +282,7 @@ def _coerce_unicode(text):
     # This is mainly a catch-all for non
     # string/unicode types like bool and int.
     try:
-        text = str(text)
+        text = six.text_type(text)
     except UnicodeDecodeError:
         text = text.decode(ExternalEncoding)
 

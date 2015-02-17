@@ -3,6 +3,8 @@
 
 import unittest
 
+from six import u
+
 from cybox.core import Action, ActionRelationship, ActionType
 from cybox.test import EntityTestCase, round_trip
 
@@ -17,17 +19,17 @@ class TestAction(EntityTestCase, unittest.TestCase):
         'action_status': "Success",
         'context': "Host",
         'timestamp': "2013-10-24T09:54:13",
-        'type': u"Modify",
-        'name': u"Modify File",
+        'type': u("Modify"),
+        'name': u("Modify File"),
         'description': {'value': "An action!", 'structuring_format': "Text"},
         'action_aliases': ['an alias', 'another_alias'],
         'action_arguments': [
             {
-                'argument_name': u"infile",
+                'argument_name': u("infile"),
                 'argument_value': "/tmp/somefile.txt",
             },
             {
-                'argument_name': u"outfile",
+                'argument_name': u("outfile"),
                 'argument_value': "/tmp/someotherfile.txt",
             }
         ],
@@ -39,7 +41,7 @@ class TestAction(EntityTestCase, unittest.TestCase):
         ],
         'relationships': [
             {
-                'type': u"Followed_By",
+                'type': u("Followed_By"),
                 'action_reference': [{'action_id': "example:Action-2"}]
             }
         ],
@@ -51,7 +53,7 @@ class TestActionRelationship(EntityTestCase, unittest.TestCase):
     klass = ActionRelationship
 
     _full_dict = {
-        'type': u"Add",
+        'type': u("Add"),
         'action_reference': [
             {'action_id': "example:Action-1"},
             {'action_id': "example:Action-3"},
@@ -60,7 +62,7 @@ class TestActionRelationship(EntityTestCase, unittest.TestCase):
 
     def test_nonstandard_type_vocab(self):
         ar = ActionRelationship()
-        ar.type = ActionType(u"AddedMultipleTimes")
+        ar.type = ActionType(u("AddedMultipleTimes"))
         ar.type.vocab_reference = "http://example.com/action-types/"
         ar.type.xsi_type = None
         ar2 = round_trip(ar)
