@@ -1,10 +1,10 @@
 # Copyright (c) 2015, The MITRE Corporation. All rights reserved.
 # See LICENSE.txt for complete terms.
 
+import six
 from six import u
 
 import cybox
-from cybox.compat import basestring
 import cybox.bindings.cybox_common as common_binding
 from cybox.common import HexBinary, String, VocabString
 
@@ -134,7 +134,7 @@ class HashList(cybox.EntityList):
 
     def _fix_value(self, value):
         # If the user tries to put a string into a list, convert it to a Hash.
-        if isinstance(value, basestring):
+        if isinstance(value, six.string_types):
             return Hash(value)
 
     @property

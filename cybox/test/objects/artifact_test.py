@@ -18,10 +18,13 @@ from cybox.compat import bytes, str
 class TestRawArtifact(unittest.TestCase):
 
     def test_xml_output(self):
-        data = b"0123456789abcdef"
+        # A RawArtifact stores a Unicode string, even though it typically
+        # consists only of valid Base64 characters.
+        data = u("0123456789abcdef")
         ra = RawArtifact(data)
 
-        self.assertTrue(data in ra.to_xml())
+        expected_data = data.encode('utf-8')
+        self.assertTrue(expected_data in ra.to_xml())
 
 
 class TestArtifactEncoding(unittest.TestCase):

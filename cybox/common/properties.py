@@ -4,9 +4,10 @@
 from datetime import datetime
 
 import dateutil.parser
+import six
 
 import cybox
-from cybox.compat import basestring, long, str, UnicodeMixin
+from cybox.compat import long, UnicodeMixin
 import cybox.bindings.cybox_common as common_binding
 from cybox.common import PatternFieldGroup
 from cybox.utils import normalize_to_xml, denormalize_from_xml
@@ -44,7 +45,7 @@ class BaseProperty(PatternFieldGroup, cybox.Entity, UnicodeMixin):
         self.observed_encoding = None
 
     def __unicode__(self):
-        return str(self.serialized_value)
+        return six.text_type(self.serialized_value)
 
     def __int__(self):
         return int(self.serialized_value)
@@ -342,7 +343,7 @@ class String(BaseProperty):
 
     @staticmethod
     def _parse_value(value):
-        if value is not None and not isinstance(value, basestring):
+        if value is not None and not isinstance(value, six.string_types):
             raise ValueError("Cannot set String type to non-string value")
 
         return value
@@ -355,7 +356,7 @@ class _IntegerBase(BaseProperty):
     def _parse_value(value):
         if value is None or value == '':
             return None
-        if isinstance(value, basestring):
+        if isinstance(value, six.string_types):
             return int(value, 0)
         else:
             return int(value)
@@ -507,7 +508,7 @@ class _LongBase(BaseProperty):
     def _parse_value(value):
         if value is None or value == '':
             return None
-        if isinstance(value, basestring):
+        if isinstance(value, six.string_types):
             return long(value, 0)
         else:
             return long(value)
