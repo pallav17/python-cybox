@@ -4,14 +4,14 @@
 import binascii
 import unittest
 
+import six
 from six import u
 
 from cybox.common import ExtractedString, Hash
-from cybox.compat import str
 from cybox.test import EntityTestCase
 
 STRING = u("This is a string")
-HEX_STRING = str(binascii.hexlify(STRING.encode("ascii")))
+HEX_STRING = six.text_type(binascii.hexlify(STRING.encode("ascii")))
 
 class TestExtractedString(EntityTestCase, unittest.TestCase):
     klass = ExtractedString

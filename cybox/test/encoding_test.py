@@ -6,9 +6,8 @@
 
 import unittest
 
+import six
 from six import u
-
-from cybox.compat import str
 
 import cybox.bindings as bindings
 from cybox.common import Contributor, String, MeasureSource
@@ -87,17 +86,17 @@ class EncodingTests(unittest.TestCase):
     def test_quote_xml_int(self):
         i = 65536
         s = bindings.quote_xml(i)
-        self.assertEqual(str(i), s)
+        self.assertEqual(six.text_type(i), s)
 
     def test_quote_xml_bool(self):
         b = True
         s = bindings.quote_xml(b)
-        self.assertEqual(str(b), s)
+        self.assertEqual(six.text_type(b), s)
 
     def test_quote_xml_zero(self):
         i = 0
         s = bindings.quote_xml(i)
-        self.assertEqual(str(i), s)
+        self.assertEqual(six.text_type(i), s)
 
     def test_quote_attrib_zero(self):
         i = 0
@@ -141,7 +140,7 @@ class EncodingTests(unittest.TestCase):
         o = Observable()
         o.title = UNICODE_STR
         xml = o.to_xml(encoding=None)
-        self.assertTrue(isinstance(xml, str))
+        self.assertTrue(isinstance(xml, six.text_type))
         self.assertTrue(UNICODE_STR in xml)
 
 if __name__ == "__main__":

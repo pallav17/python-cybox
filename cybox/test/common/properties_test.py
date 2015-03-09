@@ -4,12 +4,12 @@
 import datetime
 import unittest
 
+import six
 from six import u
 
 from cybox.common import (BaseProperty, DateTime, Integer, Long,
         NonNegativeInteger, PositiveInteger, String, UnsignedInteger,
         UnsignedLong, BINDING_CLASS_MAPPING, DEFAULT_DELIM)
-from cybox.compat import str
 import cybox.test
 from cybox.utils import normalize_to_xml
 
@@ -57,8 +57,10 @@ class TestBaseProperty(unittest.TestCase):
     def test_unicode_string(self):
         s = u("A Unicode \ufffd string")
         string = String(s)
-        self.assertEqual(s, str(string))
-        self.assertEqual(s.encode("utf-8"), str(string).encode("utf-8"))
+
+        unicode_string = six.text_type(string)
+        self.assertEqual(s, unicode_string)
+        self.assertEqual(s.encode("utf-8"), unicode_string.encode("utf-8"))
         self.assertTrue(s.encode("utf-8") in string.to_xml())
 
     def test_cannot_create_abstract_obj(self):
@@ -139,7 +141,7 @@ class TestBaseProperty(unittest.TestCase):
         val = "abc1234"
         s = String(val)
         self.assertEqual(val, s.value)
-        self.assertEqual(val, str(s))
+        self.assertEqual(val, six.text_type(s))
 
     def test_coerce_to_int(self):
         val = 42
@@ -238,13 +240,13 @@ class TestDateTime(unittest.TestCase):
     def test_parse_datetime(self):
         cybox_dt = DateTime(self.dt)
         self.assertEqual(self.dt, cybox_dt.value)
-        self.assertEqual(self.dt.isoformat(), str(cybox_dt))
+        self.assertEqual(self.dt.isoformat(), six.text_type(cybox_dt))
 
     def test_parse_date_string(self):
         cybox_dt2 = DateTime(self.dt_str)
         self.assertEqual(self.dt, cybox_dt2.value)
         self.assertEqual(self.dt.isoformat(), cybox_dt2.serialized_value)
-        self.assertEqual(self.dt.isoformat(), str(cybox_dt2))
+        self.assertEqual(self.dt.isoformat(), six.text_type(cybox_dt2))
 
     def test_list_dates(self):
         dt = DateTime([self.dt, self.dt, self.dt])
