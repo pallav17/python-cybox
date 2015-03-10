@@ -17,7 +17,7 @@ def get_version():
 with open('README.rst') as f:
     readme = f.read()
 
-install_requires = ['lxml>=2.2.3', 'python-dateutil', 'six>1.4.0']
+install_requires = ['lxml>=2.2.3', 'python-dateutil', 'six>1.9.0']
 try:
     import importlib
 except ImportError:
