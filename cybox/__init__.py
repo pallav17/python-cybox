@@ -7,9 +7,9 @@ import collections
 import inspect
 import json
 
+from mixbox.binding_utils import save_encoding
 import six
 
-import cybox.bindings as bindings
 import cybox.utils.idgen
 from cybox.utils import Namespace, META
 
@@ -267,7 +267,7 @@ class Entity(object):
             namespace_def = namespace_def.replace('\n\t', ' ')
 
 
-        with bindings.save_encoding(encoding):
+        with save_encoding(encoding):
             sio = six.StringIO()
             self.to_obj().export(
                 sio.write,
